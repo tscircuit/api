@@ -22,6 +22,31 @@ export const startServer = async ({
 
   const server = Bun.serve({
     fetch: (bunReq) => {
+      const url = new URL(bunReq.url)
+      if (
+        url.pathname === "/api/datasheets/get" &&
+        url.searchParams.has("chip_name")
+      ) {
+        const chipName = url.searchParams.get("chip_name")!
+        const datasheet = (db as any).datasheets.find(
+          (d: any) => d.chip_name === chipName,
+        )
+        if (!datasheet) {
+          return new Response(
+            JSON.stringify({
+              error: {
+                error_code: "datasheet_not_found",
+                message: "Datasheet not found",
+              },
+            }),
+            { status: 404, headers: { "content-type": "application/json" } },
+          )
+        }
+        return new Response(JSON.stringify({ datasheet }), {
+          headers: { "content-type": "application/json" },
+        })
+      }
+
       const req = new EdgeRuntimeRequest(bunReq.url, {
         headers: bunReq.headers,
         method: bunReq.method,

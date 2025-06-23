@@ -31,17 +31,58 @@ export class TscircuitApiClient {
   }
 
   public datasheets = {
-    create: async ({ chip_name }: { chip_name: string }): Promise<Datasheet> => {
+    create: async ({
+      chip_name,
+    }: {
+      chip_name: string
+    }): Promise<Datasheet> => {
       const res = await this.ky
         .post("datasheets/create", { json: { chip_name } })
         .json<{ datasheet: Datasheet }>()
       return res.datasheet
     },
-    get: async ({ datasheet_id }: { datasheet_id: string }): Promise<Datasheet> => {
+    get: async ({
+      datasheet_id,
+      chip_name,
+    }: {
+      datasheet_id?: string
+      chip_name?: string
+    }): Promise<Datasheet> => {
+      const searchParams: Record<string, string> = {}
+      if (datasheet_id) searchParams.datasheet_id = datasheet_id
+      if (chip_name) searchParams.chip_name = chip_name
       const res = await this.ky
-        .get("datasheets/get", { searchParams: { datasheet_id } })
+        .get("datasheets/get", { searchParams })
         .json<{ datasheet: Datasheet }>()
       return res.datasheet
+    },
+    findCreateWait: async ({
+      chip_name,
+    }: {
+      chip_name: string
+    }): Promise<Datasheet> => {
+      try {
+        const existing = await this.datasheets.get({ chip_name })
+        if (existing.pin_information) return existing
+      } catch (err: any) {
+        if (!(err instanceof Error) || (err as any)?.response?.status !== 404) {
+          throw err
+        }
+      }
+
+      await this.datasheets.create({ chip_name })
+
+      for (let i = 0; i < 60; i++) {
+        await new Promise((r) => setTimeout(r, 1000))
+        try {
+          const ds = await this.datasheets.get({ chip_name })
+          if (ds.pin_information) return ds
+        } catch (err: any) {
+          if ((err as any)?.response?.status !== 404) throw err
+        }
+      }
+
+      throw new Error("Timed out waiting for datasheet to be processed")
     },
   }
 }
