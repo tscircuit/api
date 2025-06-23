@@ -1,10 +1,12 @@
 import { test, expect } from "bun:test"
 import { getTestFixture } from "tests/fixtures/getTestFixture"
 
-test("/something/create", async () => {
-  const { client } = getTestFixture()
+test("/datasheets/create", async () => {
+  const { client } = await getTestFixture()
 
-  const createdThing = await client.something.create({})
+  const datasheet = await client.datasheets.create({ chip_name: "TestChip" })
 
-  // expect(createdThing)...
+  expect(datasheet.chip_name).toBe("TestChip")
+  expect(datasheet.pin_information).toBeNull()
+  expect(datasheet.datasheet_pdf_urls).toBeNull()
 })
