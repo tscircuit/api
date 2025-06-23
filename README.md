@@ -1,5 +1,7 @@
 # @tscircuit/api
 
+[Get an API Key](https://docs.tscircuit.com/command-line/tsci-auth-print-token)
+
 Library for accessing the tscircuit API.
 
 ## Usage
