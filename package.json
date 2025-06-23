@@ -1,10 +1,11 @@
 {
-  "name": "api",
+  "name": "@tscircuit/api",
   "module": "index.ts",
   "type": "module",
   "private": true,
   "devDependencies": {
     "@biomejs/biome": "^2.0.4",
+    "@tscircuit/fake-snippets": "^0.0.88",
     "@types/bun": "latest"
   },
   "peerDependencies": {
