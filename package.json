@@ -4,7 +4,9 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "build": "tsdown ./lib/index.ts --dts --outDir dist"
+    "build": "tsdown ./lib/index.ts --dts --outDir dist",
+    "format": "biome format --write .",
+    "format:check": "biome format ."
   },
   "devDependencies": {
     "@biomejs/biome": "^2.0.4",
