@@ -1,14 +1,30 @@
 {
   "name": "@tscircuit/api",
-  "module": "index.ts",
+  "version": "0.0.1",
+  "main": "dist/index.js",
   "type": "module",
-  "private": true,
+  "scripts": {
+    "build": "tsdown ./lib/index.ts --dts --outDir dist"
+  },
   "devDependencies": {
     "@biomejs/biome": "^2.0.4",
+    "@edge-runtime/primitives": "^6.0.0",
     "@tscircuit/fake-snippets": "^0.0.88",
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "circuit-to-svg": "^0.0.158",
+    "easyeda": "^0.0.186",
+    "get-port": "^7.1.0",
+    "jose": "^6.0.11",
+    "md5": "^2.3.0",
+    "redaxios": "^0.5.1",
+    "tsdown": "^0.12.8",
+    "winterspec": "^0.0.107",
+    "zustand-hoist": "^2.0.1"
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "dependencies": {
+    "ky": "^1.8.1"
   }
 }
