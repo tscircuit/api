@@ -3,13 +3,16 @@ import ky, { type KyInstance } from "ky"
 import { startServer } from "./startServer"
 import { seed as seedDB } from "@tscircuit/fake-snippets"
 import getPort from "get-port"
+import { TscircuitApiClient } from "lib"
 
 interface TestFixture {
   ky: KyInstance
   serverUrl: string
+  client: TscircuitApiClient
 }
 
 export const getTestFixture = async (): Promise<TestFixture> => {
+  process.env.BUN_TEST = "true"
   // Find a free port for the test server
   const port = await getPort()
   const testInstanceId = Math.random().toString(36).substring(2, 15)
@@ -32,6 +35,11 @@ export const getTestFixture = async (): Promise<TestFixture> => {
     retry: 0,
   })
 
+  const client = new TscircuitApiClient({
+    baseUrl: serverUrl,
+    apiKey: "dummy",
+  })
+
   // Cleanup logic
   afterAll(() => {
     server.stop()
@@ -40,5 +48,6 @@ export const getTestFixture = async (): Promise<TestFixture> => {
   return {
     ky: kyInstance,
     serverUrl,
+    client,
   }
 }

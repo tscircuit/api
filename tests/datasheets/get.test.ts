@@ -1,12 +1,12 @@
 import { test, expect } from "bun:test"
 import { getTestFixture } from "tests/fixtures/getTestFixture"
 
-test("/something/get", async () => {
-  const { client } = getTestFixture()
+test("/datasheets/get", async () => {
+  const { client } = await getTestFixture()
 
-  const createdThing = await client.something.create({})
+  const created = await client.datasheets.create({ chip_name: "Chip" })
 
-  const gottenThing = await client.something.get({ something_id: createdThing.something_id })
+  const gotten = await client.datasheets.get({ datasheet_id: created.datasheet_id })
 
-  // expect(gottenThing)...
+  expect(gotten.datasheet_id).toBe(created.datasheet_id)
 })
