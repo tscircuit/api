@@ -42,3 +42,35 @@ const processed = await client.datasheets.findCreateWait({ chip_name: "RP2040" }
 ```
 
 The promise resolves once processing is complete or throws after a timeout.
+
+### Example datasheet output
+
+A response from `datasheets/get` contains all of the datasheet fields. Below is
+an abbreviated example for the RP2040:
+
+```json
+{
+  "datasheet": {
+    "datasheet_id": "2a51fc64-5154-4513-ad7c-29429bdc973e",
+    "chip_name": "RP2040",
+    "datasheet_pdf_urls": [
+      "https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf"
+    ],
+    "pin_information": [
+      {
+        "name": ["IOVDD"],
+        "pin_number": "1",
+        "description": "Power supply for digital GPIOs, nominal voltage 1.8V to 3.3V.",
+        "capabilities": ["Power Supply (Digital IO)"]
+      },
+      {
+        "name": ["GPIO0"],
+        "pin_number": "2",
+        "description": "General-purpose digital input and output.",
+        "capabilities": ["GPIO", "SPI0_RX", "UART0_TX", "..."]
+      },
+      ...
+    ]
+  }
+}
+```
