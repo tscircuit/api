@@ -74,3 +74,19 @@ an abbreviated example for the RP2040:
   }
 }
 ```
+
+### Compile code
+
+Compile tscircuit JSX/TSX code into Circuit JSON using `client.compile.compileCode`.
+
+```ts
+const result = await client.compile.compileCode({
+  fs_map: {
+    "user-code.tsx": `export default () => (
+      <resistor name="R1" resistance="1k" />
+    )`,
+  },
+})
+
+console.log(result.circuit_json)
+```
