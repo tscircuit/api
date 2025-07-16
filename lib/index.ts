@@ -1,5 +1,5 @@
 import ky, { type KyInstance } from "ky"
-import type { Datasheet } from "@tscircuit/fake-snippets/dist/schema"
+import type { Datasheet } from "@tscircuit/fake-snippets/schema"
 
 export interface TscircuitApiClientParameters {
   baseUrl?: string
