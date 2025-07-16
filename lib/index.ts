@@ -10,6 +10,7 @@ export class TscircuitApiClient {
   private baseUrl: string
   private apiKey?: string
   private ky: KyInstance
+  private compileKy: KyInstance
 
   constructor({ baseUrl, apiKey }: TscircuitApiClientParameters) {
     this.baseUrl = baseUrl ?? "https://api.tscircuit.com"
@@ -26,6 +27,11 @@ export class TscircuitApiClient {
       headers: {
         Authorization: `Bearer ${this.apiKey}`,
       },
+      retry: 0,
+    })
+
+    this.compileKy = ky.create({
+      prefixUrl: "https://compile.tscircuit.com/api",
       retry: 0,
     })
   }
@@ -83,6 +89,30 @@ export class TscircuitApiClient {
       }
 
       throw new Error("Timed out waiting for datasheet to be processed")
+    },
+  }
+
+  public compile = {
+    compileCode: async ({
+      fs_map,
+      code,
+    }: {
+      fs_map?: Record<string, string>
+      code?: string
+    }): Promise<{ circuit_json: any; logs: any[] }> => {
+      if (fs_map) {
+        return this.compileKy
+          .post("compile", { json: { fs_map } })
+          .json<{ circuit_json: any; logs: any[] }>()
+      }
+
+      if (code) {
+        return this.compileKy
+          .get("compile", { searchParams: { code } })
+          .json<{ circuit_json: any; logs: any[] }>()
+      }
+
+      throw new Error("Either fs_map or code must be provided")
     },
   }
 }
