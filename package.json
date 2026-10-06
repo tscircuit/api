@@ -17,15 +17,17 @@
     "@edge-runtime/primitives": "^6.0.0",
     "@tscircuit/fake-snippets": "^0.0.88",
     "@types/bun": "latest",
-    "circuit-to-svg": "^0.0.158",
-    "easyeda": "^0.0.186",
+    "circuit-to-svg": "^0.0.444",
+    "easyeda": "^0.0.372",
     "get-port": "^7.1.0",
     "jose": "^6.0.11",
     "md5": "^2.3.0",
     "redaxios": "^0.5.1",
     "tsdown": "^0.12.8",
     "winterspec": "^0.0.107",
-    "zustand-hoist": "^2.0.1"
+    "zustand-hoist": "^2.0.1",
+    "bun-match-svg": "^0.0.17",
+    "zod": "^3.23.8"
   },
   "peerDependencies": {
     "typescript": "^5"
