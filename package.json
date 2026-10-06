@@ -26,7 +26,8 @@
     "tsdown": "^0.12.8",
     "winterspec": "^0.0.107",
     "zustand-hoist": "^2.0.1",
-    "bun-match-svg": "^0.0.17"
+    "bun-match-svg": "^0.0.17",
+    "zod": "^3.23.8"
   },
   "peerDependencies": {
     "typescript": "^5"
